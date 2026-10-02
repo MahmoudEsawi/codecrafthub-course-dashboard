@@ -25,6 +25,17 @@ const VALID_STATUSES = ['Not Started', 'In Progress', 'Completed'];
 // Built-in middleware to automatically parse incoming JSON request bodies
 app.use(express.json());
 
+// Enable CORS for frontend dashboard connections (e.g. from Bolt or local UI)
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+  next();
+});
+
 // -----------------------------------------------------------------------------
 // Helper Functions for File Operations
 // -----------------------------------------------------------------------------
