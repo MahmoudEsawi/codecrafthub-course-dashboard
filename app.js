@@ -92,9 +92,12 @@ function isValidDate(dateString) {
 // -----------------------------------------------------------------------------
 
 /**
- * Root Route - Welcome message and available endpoints
+ * Root Route - Welcome message and available endpoints (or interactive dashboard in browser)
  */
 app.get('/', (req, res) => {
+  if (req.accepts('html') && !req.accepts('json')) {
+    return res.sendFile(path.join(__dirname, 'index.html'));
+  }
   res.json({
     message: 'Welcome to CodeCraftHub API!',
     documentation: {
